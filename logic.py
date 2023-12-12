@@ -18,6 +18,7 @@ def start_game(n):
     return matrix
 
 def add_2(matrix) :
+
     ## Original code
     # #Select random cell to place "2"
     row = random.randint(0, len(matrix)-1)
@@ -32,7 +33,9 @@ def add_2(matrix) :
     matrix[row][coloumn] = 2
 
     ##Test
-    #matrix[0][3] = 2048
+    matrix[0][3] = 2048
+
+    game_state(matrix)
 
     return matrix
 
@@ -45,18 +48,46 @@ def game_state(matrix):
             #Test
             #print("j", matrix[j])
             if matrix[i][j] == 2048:
-                return 'Win!'
+                print("Win")
+                #return 'Win!'
         
         #Checking game not over condition. i.e Checking for any zero entries
         for i in range(len(matrix)):
             for j in range(len(matrix)):
-                if matrix[i][j] == 0:
+                 if matrix[i][j] == 0:
+                    #print("Not Over")
                     return 'Not Over'
+                
+        #Checking for two identical numbers placed next to each other that can be added
+        #If there are no numbers that can be added then 'Game Over'     
+        for i in range(len(matrix)-1):
+            for j in range(len(matrix)-1):
+                if matrix[i][j]== matrix[i+1][j] or matrix[i][j+1] == matrix[i][j]:
+                    #print("Not Over")
+                    return 'Not Over!'
+
+        #Checking for two identical numbers placed next to each other that can be added in the last row
+        #If there are no numbers that can be added then 'Game Over' 
+        for k in range(len(matrix)-1):
+            # if i == len(matrix)-1:
+            #     print("Not Over")
+            #     break
+                #return 'Not Over'
+            if matrix[len(matrix)-1][k] == matrix[len(matrix)-1][k+1]:
+                #print("Not Over")
+                return 'Not Over!'
         
+        #Checking for two identical numbers placed next to each other that can be added in the last column
+        #If there are no numbers that can be added then 'Game Over' 
+        for k in range(len(matrix)-1):
+            # if i == len(matrix)-1:
+            #     print("Not Overr")
+            #     break
+            if matrix[k][len(matrix)-1] == matrix[k+1][len(matrix)-1]:
+                #print("Not Over")
+                return 'NOt Over!'
         
-
-            
-
-
+        return 'lose'
+         
 start_game(4)
     
