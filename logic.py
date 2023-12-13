@@ -12,8 +12,9 @@ def start_game(n):
     matrix = add_2(matrix)
 
     ##Test
-    # for i in matrix:
-    #     print(i)
+    print("Test")
+    for i in matrix:
+        print(i)
 
     return matrix
 
@@ -35,7 +36,10 @@ def add_2(matrix) :
     ##Test
     matrix[0][3] = 2048
 
+    #Test
     game_state(matrix)
+    reverse(matrix)
+    transpose(matrix)
 
     return matrix
 
@@ -48,8 +52,8 @@ def game_state(matrix):
             #Test
             #print("j", matrix[j])
             if matrix[i][j] == 2048:
-                print("Win")
-                #return 'Win!'
+                #print("Win")
+                return 'Win!'
         
         #Checking game not over condition. i.e Checking for any zero entries
         for i in range(len(matrix)):
@@ -86,8 +90,25 @@ def game_state(matrix):
             if matrix[k][len(matrix)-1] == matrix[k+1][len(matrix)-1]:
                 #print("Not Over")
                 return 'NOt Over!'
-        
         return 'lose'
-         
+    
+def reverse(matrix):
+    new_matrix = []
+    for i in range(len(matrix)):
+        new_matrix.append([])
+        for j in range(len(matrix)):
+            new_matrix.append(matrix[i][len(matrix)-j-1])
+            #print(new_matrix)
+            return new_matrix
+
+def transpose(matrix):
+    new_transpose_matrix = []
+    for i in range(len(matrix)):
+        new_transpose_matrix.append([])
+        for j in range(len(matrix)):
+            new_transpose_matrix.append(matrix[j][i])
+    for i in new_transpose_matrix:
+        print(i)
+      
 start_game(4)
     
