@@ -1,5 +1,6 @@
 
 import random
+import constants as c
 
 def start_game(n):
     #Create Matrix
@@ -15,6 +16,7 @@ def start_game(n):
     print("Test")
     for i in matrix:
         print(i)
+        
 
     return matrix
 
@@ -99,7 +101,7 @@ def reverse(matrix):
         for j in range(len(matrix)):
             new_matrix.append(matrix[i][len(matrix)-j-1])
             #print(new_matrix)
-            return new_matrix
+    return new_matrix
 
 def transpose(matrix):
     new_transpose_matrix = []
@@ -107,8 +109,12 @@ def transpose(matrix):
         new_transpose_matrix.append([])
         for j in range(len(matrix)):
             new_transpose_matrix.append(matrix[j][i])
+    return new_transpose_matrix
+    
+    #Test        
     for i in new_transpose_matrix:
         print(i)
+
       
 start_game(4)
     
