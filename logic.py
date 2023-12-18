@@ -16,14 +16,12 @@ def start_game(n):
     print("Test")
     for i in matrix:
         print(i)
-        
 
     return matrix
 
 def add_2(matrix) :
-
-    ## Original code
-    # #Select random cell to place "2"
+    # Original code
+    #Select random cell to place "2"
     row = random.randint(0, len(matrix)-1)
     coloumn = random.randint(0, len(matrix)-1)
 
@@ -36,12 +34,15 @@ def add_2(matrix) :
     matrix[row][coloumn] = 2
 
     ##Test
-    matrix[0][3] = 2048
-
+    # matrix[0][0] = 2
+    # #matrix[0][2] = 2
+    # matrix[2][0] = 4
+     
     #Test
-    game_state(matrix)
-    reverse(matrix)
-    transpose(matrix)
+    # game_state(matrix)
+    # #reverse(matrix)
+    # transpose(matrix)
+    compress(matrix)
 
     return matrix
 
@@ -92,7 +93,7 @@ def game_state(matrix):
             if matrix[k][len(matrix)-1] == matrix[k+1][len(matrix)-1]:
                 #print("Not Over")
                 return 'NOt Over!'
-        return 'lose'
+        return 'Lost:('
     
 def reverse(matrix):
     new_matrix = []
@@ -115,6 +116,27 @@ def transpose(matrix):
     for i in new_transpose_matrix:
         print(i)
 
-      
+def compress(matrix):
+    new_matrix_compress = []
+
+    for i in range(c.GRID_LEN):
+        new_matrix_compress.append(0)
+    
+    changed = False
+    position = 0
+
+    for i in range(c.GRID_LEN):
+        position = 0
+        for j in range(c.GRID_LEN):
+            if matrix[i][j]!= 0:
+                new_matrix_compress[i][position] = matrix[i][j]
+                if(j!=position):
+                    changed = True
+                position += 1
+    # print(changed)
+    # for i in new_matrix_compress:
+    #     print(i)
+    return new_matrix_compress, changed    
+
 start_game(4)
     
