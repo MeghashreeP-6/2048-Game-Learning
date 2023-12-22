@@ -13,14 +13,13 @@ def start_game(n):
     matrix = add_2(matrix)
 
     ##Test
-    print("Test")
-    for i in matrix:
-        print(i)
+    # print("Test")
+    # for i in matrix:
+    #     print(i)
 
     return matrix
 
 def add_2(matrix) :
-    # Original code
     #Select random cell to place "2"
     row = random.randint(0, len(matrix)-1)
     coloumn = random.randint(0, len(matrix)-1)
@@ -31,21 +30,32 @@ def add_2(matrix) :
         coloumn = random.randint(0, len(matrix)-1)
 
     #Place "2" in the selected cell    
-    matrix[row][coloumn] = 2
+    matrix[row][coloumn] = 2  
 
+    return matrix    
     ##Test
     # matrix[0][0] = 2
-    # #matrix[0][2] = 2
+    # matrix[0][1] = 2
+    # matrix[1][2] = 2
     # matrix[2][0] = 4
+
+    # print("ADD")
+    # for i in matrix:
+    #     print(i)
      
     #Test
     # game_state(matrix)
-    # #reverse(matrix)
-    # transpose(matrix)
-    compress(matrix)
+    #reverse(matrix)
+    #transpose(matrix)
+    #compress(matrix, False)
+    #merge(matrix, False)
+    #move_up(matrix)
+    #return matrix
+    #move_down(matrix)
+    #move_left(matrix)
+    #move_right(matrix)
 
-    return matrix
-
+#Getting the game status
 def game_state(matrix):
     #Winning Condition
     for i in range(len(matrix)):
@@ -95,48 +105,111 @@ def game_state(matrix):
                 return 'NOt Over!'
         return 'Lost:('
     
+#Reversing a matrix(Reversing content of each row)
 def reverse(matrix):
     new_matrix = []
     for i in range(len(matrix)):
         new_matrix.append([])
         for j in range(len(matrix)):
-            new_matrix.append(matrix[i][len(matrix)-j-1])
-            #print(new_matrix)
+            new_matrix[i].append(matrix[i][len(matrix)-j-1])
+    # print("Reverse")
+    # for i in new_matrix:
+    #     print(i)
     return new_matrix
 
+#Getting the transpose of a matrix(Interchange rows and coloumns)
 def transpose(matrix):
     new_transpose_matrix = []
     for i in range(len(matrix)):
         new_transpose_matrix.append([])
         for j in range(len(matrix)):
-            new_transpose_matrix.append(matrix[j][i])
+            new_transpose_matrix[i].append(matrix[j][i])
+    # print("Transpose")
+    # for i in new_transpose_matrix:
+    #     print(i)    
     return new_transpose_matrix
-    
-    #Test        
-    for i in new_transpose_matrix:
-        print(i)
 
+#Function to compress the grid
+#after every step before and after merging cells
 def compress(matrix):
     new_matrix_compress = []
-
-    for i in range(c.GRID_LEN):
-        new_matrix_compress.append(0)
+    #print(len(matrix))
+    for i in range(4):
+        new_matrix_compress.append([0] *4)
     
     changed = False
     position = 0
 
-    for i in range(c.GRID_LEN):
+    for i in range(len(matrix)):
         position = 0
-        for j in range(c.GRID_LEN):
+        for j in range(len(matrix)):
             if matrix[i][j]!= 0:
                 new_matrix_compress[i][position] = matrix[i][j]
                 if(j!=position):
                     changed = True
                 position += 1
-    # print(changed)
+    # print("Compress")
     # for i in new_matrix_compress:
     #     print(i)
     return new_matrix_compress, changed    
 
+#Function to merge cells
+#after compressing
+def merge(matrix, changed):
+    #changed = False
+    for i in  range(len(matrix)):
+        for j in range (len(matrix)-1):
+            if (matrix[i][j] == matrix[i][j+1] and matrix[i][j]!= 0):
+                matrix[i][j] *= 2
+                matrix[i][j+1]= 0
+                changed = True
+    # print("Merge")
+    # for i in matrix:
+    #     print(i)
+    return matrix, changed
+
+#Swipe up
+def move_up(game):
+    print("Up")
+    game = transpose(game)
+    game, changed = compress(game)
+    game, changed = merge(game, changed)
+    game, changed = compress(game)
+    game = transpose(game)
+    return game, changed
+
+#Swipe down
+def move_down(game):
+    print("Down")
+    game = reverse(transpose(game))
+    game, changed = compress(game)
+    game, changed = merge(game, changed)
+    game, changed = compress(game)
+    game = transpose(reverse(game))
+    # for i in game:
+    #     print(i)
+    return game, changed
+
+#Swipe left
+def move_left(game):
+    print("Left")
+    game, changed = compress(game)
+    game, changed = merge(game, changed)
+    game, changed = compress(game)
+    # for i in game:
+    #     print(i)
+    return game, changed
+
+#Swipe right
+def move_right(game):
+    print("Right")
+    game = reverse(game)
+    game, changed = compress(game)
+    game, changed = merge(game, changed)
+    game = reverse(game)
+    # for i in game:
+    #     print(i)
+    # print(changed)
+    return game, changed
 start_game(4)
     
