@@ -1,4 +1,4 @@
-
+# Author Karthik kadur Manjunath
 import random
 import constants as c
 
