@@ -134,15 +134,15 @@ def transpose(matrix):
 def compress(matrix):
     new_matrix_compress = []
     #print(len(matrix))
-    for i in range(4):
-        new_matrix_compress.append([0] *4)
+    for i in range(c.GRID_LEN):
+        new_matrix_compress.append(0)
     
     changed = False
     position = 0
 
-    for i in range(len(matrix)):
+    for i in range(c.GRID_LEN):
         position = 0
-        for j in range(len(matrix)):
+        for j in range(c.GRID_LEN):
             if matrix[i][j]!= 0:
                 new_matrix_compress[i][position] = matrix[i][j]
                 if(j!=position):
@@ -157,8 +157,8 @@ def compress(matrix):
 #after compressing
 def merge(matrix, changed):
     #changed = False
-    for i in  range(len(matrix)):
-        for j in range (len(matrix)-1):
+    for i in  range(c.GRID_LEN):
+        for j in range (c.GRID_LEN-1):
             if (matrix[i][j] == matrix[i][j+1] and matrix[i][j]!= 0):
                 matrix[i][j] *= 2
                 matrix[i][j+1]= 0
