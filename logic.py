@@ -12,6 +12,8 @@ def start_game(n):
     matrix = add_2(matrix)
     matrix = add_2(matrix)
 
+    #compress(matrix)
+
     ##Test
     # print("Test")
     # for i in matrix:
@@ -47,7 +49,7 @@ def add_2(matrix) :
     # game_state(matrix)
     #reverse(matrix)
     #transpose(matrix)
-    #compress(matrix, False)
+    #compress(matrix)
     #merge(matrix, False)
     #move_up(matrix)
     #return matrix
@@ -133,19 +135,21 @@ def transpose(matrix):
 #after every step before and after merging cells
 def compress(matrix):
     new_matrix_compress = []
+    
     #print(len(matrix))
     for i in range(c.GRID_LEN):
-        new_matrix_compress.append(0)
+        temp_matrix = []
+        for j in range(c.GRID_LEN):
+            temp_matrix.append(0)
+        new_matrix_compress.append(temp_matrix)
     
     changed = False
-    position = 0
-
     for i in range(c.GRID_LEN):
         position = 0
         for j in range(c.GRID_LEN):
             if matrix[i][j]!= 0:
                 new_matrix_compress[i][position] = matrix[i][j]
-                if(j!=position):
+                if j!=position:
                     changed = True
                 position += 1
     # print("Compress")
@@ -192,7 +196,6 @@ def move_down(game):
 
 #Swipe left
 def move_left(game):
-    print("Left")
     game, changed = compress(game)
     game, changed = merge(game, changed)
     game, changed = compress(game)
