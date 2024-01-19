@@ -1,22 +1,5 @@
-#
-# CS1010FC --- Programming Methodology
-#
-# Mission N Solutions
-#
-# Note that written answers are commented out to allow us to run your
-# code easily while grading your problem set.
-
 import random
 import constants as c
-
-#######
-# Task 1a #
-#######
-
-# [Marking Scheme]
-# Points to note:
-# Matrix elements must be equal but not identical
-# 1 mark for creating the correct matrix
 
 def start_game(n):
     #Create Matrix
@@ -25,8 +8,8 @@ def start_game(n):
         matrix.append([0] * n)
 
     #To Begin game add "2" in two random places
-    matrix = add_two(matrix)
-    matrix = add_two(matrix)
+    matrix = add_2(matrix)
+    matrix = add_2(matrix)
 
     #compress(matrix)
 
@@ -37,172 +20,192 @@ def start_game(n):
 
     return matrix
 
-###########
-# Task 1b #
-###########
+def add_2(matrix) :
+    #Select random cell to place "2"
+    row = random.randint(0, len(matrix)-1)
+    coloumn = random.randint(0, len(matrix)-1)
 
-# [Marking Scheme]
-# Points to note:
-# Must ensure that it is created on a zero entry
-# 1 mark for creating the correct loop
+    #Checking for availability. If the chosen cell is not empty, select random cell to place "2"
+    while matrix[row][coloumn] != 0:
+        row = random.randint(0, len(matrix)-1)
+        coloumn = random.randint(0, len(matrix)-1)
 
-def add_two(mat):
-    a = random.randint(0, len(mat)-1)
-    b = random.randint(0, len(mat)-1)
-    while mat[a][b] != 0:
-        a = random.randint(0, len(mat)-1)
-        b = random.randint(0, len(mat)-1)
-    mat[a][b] = 2
-    return mat
+    #Place "2" in the selected cell    
+    matrix[row][coloumn] = 2  
 
-###########
-# Task 1c #
-###########
+    return matrix    
+    ##Test
+    # matrix[0][0] = 2
+    # matrix[0][1] = 2
+    # matrix[1][2] = 2
+    # matrix[2][0] = 4
 
-# [Marking Scheme]
-# Points to note:
-# Matrix elements must be equal but not identical
-# 0 marks for completely wrong solutions
-# 1 mark for getting only one condition correct
-# 2 marks for getting two of the three conditions
-# 3 marks for correct checking
+    # print("ADD")
+    # for i in matrix:
+    #     print(i)
+     
+    #Test
+    # game_state(matrix)
+    #reverse(matrix)
+    #transpose(matrix)
+    #compress(matrix)
+    #merge(matrix, False)
+    #move_up(matrix)
+    #return matrix
+    #move_down(matrix)
+    #move_left(matrix)
+    #move_right(matrix)
 
-def game_state(mat):
-    # check for win cell
-    for i in range(len(mat)):
-        for j in range(len(mat[0])):
-            if mat[i][j] == 2048:
-                return 'win'
-    # check for any zero entries
-    for i in range(len(mat)):
-        for j in range(len(mat[0])):
-            if mat[i][j] == 0:
-                return 'not over'
-    # check for same cells that touch each other
-    for i in range(len(mat)-1):
-        # intentionally reduced to check the row on the right and below
-        # more elegant to use exceptions but most likely this will be their solution
-        for j in range(len(mat[0])-1):
-            if mat[i][j] == mat[i+1][j] or mat[i][j+1] == mat[i][j]:
-                return 'not over'
-    for k in range(len(mat)-1):  # to check the left/right entries on the last row
-        if mat[len(mat)-1][k] == mat[len(mat)-1][k+1]:
-            return 'not over'
-    for j in range(len(mat)-1):  # check up/down entries on last column
-        if mat[j][len(mat)-1] == mat[j+1][len(mat)-1]:
-            return 'not over'
-    return 'lose'
+#Getting the game status
+def game_state(matrix):
+    #Winning Condition
+    for i in range(len(matrix)):
+        #Test
+        #print("i", matrix[i])
+        for j in range(len(matrix)):
+            #Test
+            #print("j", matrix[j])
+            if matrix[i][j] == 2048:
+                #print("Win")
+                return 'Win!'
+        
+        #Checking game not over condition. i.e Checking for any zero entries
+        for i in range(len(matrix)):
+            for j in range(len(matrix)):
+                 if matrix[i][j] == 0:
+                    #print("Not Over")
+                    return 'Not Over'
+                
+        #Checking for two identical numbers placed next to each other that can be added
+        #If there are no numbers that can be added then 'Game Over'     
+        for i in range(len(matrix)-1):
+            for j in range(len(matrix)-1):
+                if matrix[i][j]== matrix[i+1][j] or matrix[i][j+1] == matrix[i][j]:
+                    #print("Not Over")
+                    return 'Not Over!'
 
-###########
-# Task 2a #
-###########
+        #Checking for two identical numbers placed next to each other that can be added in the last row
+        #If there are no numbers that can be added then 'Game Over' 
+        for k in range(len(matrix)-1):
+            # if i == len(matrix)-1:
+            #     print("Not Over")
+            #     break
+                #return 'Not Over'
+            if matrix[len(matrix)-1][k] == matrix[len(matrix)-1][k+1]:
+                #print("Not Over")
+                return 'Not Over!'
+        
+        #Checking for two identical numbers placed next to each other that can be added in the last column
+        #If there are no numbers that can be added then 'Game Over' 
+        for k in range(len(matrix)-1):
+            # if i == len(matrix)-1:
+            #     print("Not Overr")
+            #     break
+            if matrix[k][len(matrix)-1] == matrix[k+1][len(matrix)-1]:
+                #print("Not Over")
+                return 'NOt Over!'
+        return 'Lost:('
+    
+#Reversing a matrix(Reversing content of each row)
+def reverse(matrix):
+    new_matrix = []
+    for i in range(len(matrix)):
+        new_matrix.append([])
+        for j in range(len(matrix)):
+            new_matrix[i].append(matrix[i][len(matrix)-j-1])
+    # print("Reverse")
+    # for i in new_matrix:
+    #     print(i)
+    return new_matrix
 
-# [Marking Scheme]
-# Points to note:
-# 0 marks for completely incorrect solutions
-# 1 mark for solutions that show general understanding
-# 2 marks for correct solutions that work for all sizes of matrices
+#Getting the transpose of a matrix(Interchange rows and coloumns)
+def transpose(matrix):
+    new_transpose_matrix = []
+    for i in range(len(matrix)):
+        new_transpose_matrix.append([])
+        for j in range(len(matrix)):
+            new_transpose_matrix[i].append(matrix[j][i])
+    # print("Transpose")
+    # for i in new_transpose_matrix:
+    #     print(i)    
+    return new_transpose_matrix
 
-def reverse(mat):
-    new = []
-    for i in range(len(mat)):
-        new.append([])
-        for j in range(len(mat[0])):
-            new[i].append(mat[i][len(mat[0])-j-1])
-    return new
-
-###########
-# Task 2b #
-###########
-
-# [Marking Scheme]
-# Points to note:
-# 0 marks for completely incorrect solutions
-# 1 mark for solutions that show general understanding
-# 2 marks for correct solutions that work for all sizes of matrices
-
-def transpose(mat):
-    new = []
-    for i in range(len(mat[0])):
-        new.append([])
-        for j in range(len(mat)):
-            new[i].append(mat[j][i])
-    return new
-
-##########
-# Task 3 #
-##########
-
-# [Marking Scheme]
-# Points to note:
-# The way to do movement is compress -> merge -> compress again
-# Basically if they can solve one side, and use transpose and reverse correctly they should
-# be able to solve the entire thing just by flipping the matrix around
-# No idea how to grade this one at the moment. I have it pegged to 8 (which gives you like,
-# 2 per up/down/left/right?) But if you get one correct likely to get all correct so...
-# Check the down one. Reverse/transpose if ordered wrongly will give you wrong result.
-
-def compress(mat):
-    new = []
-    for j in range(c.GRID_LEN):
-        partial_new = []
-        for i in range(c.GRID_LEN):
-            partial_new.append(0)
-        new.append(partial_new)
-    done = False
+#Function to compress the grid
+#after every step before and after merging cells
+def compress(matrix):
+    new_matrix_compress = []
+    #print(len(matrix))
     for i in range(c.GRID_LEN):
-        count = 0
+        temp_matrix = []
         for j in range(c.GRID_LEN):
-            if mat[i][j] != 0:
-                new[i][count] = mat[i][j]
-                if j != count:
-                    done = True
-                count += 1
-    return new, done
-
-def merge(mat, done):
+            temp_matrix.append(0)
+        new_matrix_compress.append(temp_matrix)
+    
+    changed = False
     for i in range(c.GRID_LEN):
-        for j in range(c.GRID_LEN-1):
-            if mat[i][j] == mat[i][j+1] and mat[i][j] != 0:
-                mat[i][j] *= 2
-                mat[i][j+1] = 0
-                done = True
-    return mat, done
+        position = 0
+        for j in range(c.GRID_LEN):
+            if matrix[i][j]!= 0:
+                new_matrix_compress[i][position] = matrix[i][j]
+                if j!=position:
+                    changed = True
+                position += 1
+    # print("Compress")
+    # for i in new_matrix_compress:
+    #     print(i)
+    return new_matrix_compress, changed  
 
-def move_up(game):
-    print("up")
-    # return matrix after shifting up
-    game = transpose(game)
-    game, done = compress(game)
-    game, done = merge(game, done)
-    game = compress(game)[0]
-    game = transpose(game)
-    return game, done
+#Function to merge cells
+#after compressing
+def merge(matrix, changed):
+    #changed = False
+    for i in  range(c.GRID_LEN):
+        for j in range (c.GRID_LEN-1):
+            if (matrix[i][j] == matrix[i][j+1] and matrix[i][j]!= 0):
+                matrix[i][j] *= 2
+                matrix[i][j+1]= 0
+                changed = True
+    # print("Merge")
+    # for i in matrix:
+    #     print(i)
+    return matrix, changed
 
-def move_down(game):
-    print("down")
-    # return matrix after shifting down
+def up(game):
+    print("Up")
+    game = transpose(game)
+    game, changed = compress(game)
+    game, changed = merge(game, changed)
+    game = compress(game)
+    game = transpose(game)
+    return game, changed
+
+def down(game):
+    print("Down")
     game = reverse(transpose(game))
-    game, done = compress(game)
-    game, done = merge(game, done)
-    game = compress(game)[0]
+    game, changed = compress(game)
+    game, changed = merge(game, changed)
+    game = compress(game)
     game = transpose(reverse(game))
-    return game, done
+    # for i in game:
+    #     print(i)
+    return game, changed
 
-def move_left(game):
-    print("left")
-    # return matrix after shifting left
-    game, done = compress(game)
-    game, done = merge(game, done)
-    game = compress(game)[0]
-    return game, done
+def left(game):
+    game, changed = compress(game)
+    game, changed = merge(game, changed)
+    game = compress(game)
+    # for i in game:
+    #     print(i)
+    return game, changed
 
-def move_right(game):
-    print("right")
-    # return matrix after shifting right
+def right(game):
+    print("Right")
     game = reverse(game)
-    game, done = compress(game)
-    game, done = merge(game, done)
-    game = compress(game)[0]
+    game, changed = compress(game)
+    game, changed = merge(game, changed)
+    game = compress(game)
     game = reverse(game)
-    return game, done
+    # for i in game:
+    #     print(i)
+    # print(changed)
+    return game, changed
