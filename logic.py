@@ -62,7 +62,7 @@ def game_state(matrix):
     for i in range(len(matrix)):
         #Test
         #print("i", matrix[i])
-        for j in range(len(matrix)):
+        for j in range(len(matrix[0])):
             #Test
             #print("j", matrix[j])
             if matrix[i][j] == 2048:
@@ -71,7 +71,7 @@ def game_state(matrix):
         
         #Checking game not over condition. i.e Checking for any zero entries
         for i in range(len(matrix)):
-            for j in range(len(matrix)):
+            for j in range(len(matrix[0])):
                  if matrix[i][j] == 0:
                     #print("Not Over")
                     return 'Not Over'
@@ -79,7 +79,7 @@ def game_state(matrix):
         #Checking for two identical numbers placed next to each other that can be added
         #If there are no numbers that can be added then 'Game Over'     
         for i in range(len(matrix)-1):
-            for j in range(len(matrix)-1):
+            for j in range(len(matrix[0])-1):
                 if matrix[i][j]== matrix[i+1][j] or matrix[i][j+1] == matrix[i][j]:
                     #print("Not Over")
                     return 'Not Over!'
@@ -87,10 +87,6 @@ def game_state(matrix):
         #Checking for two identical numbers placed next to each other that can be added in the last row
         #If there are no numbers that can be added then 'Game Over' 
         for k in range(len(matrix)-1):
-            # if i == len(matrix)-1:
-            #     print("Not Over")
-            #     break
-                #return 'Not Over'
             if matrix[len(matrix)-1][k] == matrix[len(matrix)-1][k+1]:
                 #print("Not Over")
                 return 'Not Over!'
@@ -98,9 +94,6 @@ def game_state(matrix):
         #Checking for two identical numbers placed next to each other that can be added in the last column
         #If there are no numbers that can be added then 'Game Over' 
         for k in range(len(matrix)-1):
-            # if i == len(matrix)-1:
-            #     print("Not Overr")
-            #     break
             if matrix[k][len(matrix)-1] == matrix[k+1][len(matrix)-1]:
                 #print("Not Over")
                 return 'NOt Over!'
@@ -111,7 +104,7 @@ def reverse(matrix):
     new_matrix = []
     for i in range(len(matrix)):
         new_matrix.append([])
-        for j in range(len(matrix)):
+        for j in range(len(matrix[0])):
             new_matrix[i].append(matrix[i][len(matrix)-j-1])
     # print("Reverse")
     # for i in new_matrix:
@@ -123,7 +116,7 @@ def transpose(matrix):
     new_transpose_matrix = []
     for i in range(len(matrix)):
         new_transpose_matrix.append([])
-        for j in range(len(matrix)):
+        for j in range(len(matrix[0])):
             new_transpose_matrix[i].append(matrix[j][i])
     # print("Transpose")
     # for i in new_transpose_matrix:
@@ -175,7 +168,7 @@ def up(game):
     game = transpose(game)
     game, changed = compress(game)
     game, changed = merge(game, changed)
-    game = compress(game)
+    game = compress(game)[0]
     game = transpose(game)
     return game, changed
 
@@ -184,7 +177,7 @@ def down(game):
     game = reverse(transpose(game))
     game, changed = compress(game)
     game, changed = merge(game, changed)
-    game = compress(game)
+    game = compress(game)[0]
     game = transpose(reverse(game))
     # for i in game:
     #     print(i)
@@ -193,7 +186,7 @@ def down(game):
 def left(game):
     game, changed = compress(game)
     game, changed = merge(game, changed)
-    game = compress(game)
+    game = compress(game)[0]
     # for i in game:
     #     print(i)
     return game, changed
@@ -203,7 +196,7 @@ def right(game):
     game = reverse(game)
     game, changed = compress(game)
     game, changed = merge(game, changed)
-    game = compress(game)
+    game = compress(game)[0]
     game = reverse(game)
     # for i in game:
     #     print(i)
