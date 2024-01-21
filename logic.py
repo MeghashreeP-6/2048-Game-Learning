@@ -33,33 +33,32 @@ def game_state(matrix):
     for i in range(len(matrix)):
         for j in range(len(matrix[0])):
             if matrix[i][j] == 2048:
-                return 'Win!'
-        
-        #Checking game not over condition. i.e Checking for any zero entries
-        for i in range(len(matrix)):
-            for j in range(len(matrix[0])):
-                 if matrix[i][j] == 0:
-                    return 'Not Over'
-                
-        #Checking for two identical numbers placed next to each other that can be added
-        #If there are no numbers that can be added then 'Game Over'     
-        for i in range(len(matrix)-1):
-            for j in range(len(matrix[0])-1):
-                if matrix[i][j]== matrix[i+1][j] or matrix[i][j+1] == matrix[i][j]:
-                    return 'Not Over!'
-
-        #Checking for two identical numbers placed next to each other that can be added in the last row
-        #If there are no numbers that can be added then 'Game Over' 
-        for k in range(len(matrix)-1):
-            if matrix[len(matrix)-1][k] == matrix[len(matrix)-1][k+1]:
+                return 'win'
+    #Checking game not over condition. i.e Checking for any zero entries
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+            if matrix[i][j] == 0:
+                return 'Not Over'
+    
+    #Checking for two identical numbers placed next to each other that can be added
+    #If there are no numbers that can be added then 'Game Over'     
+    for i in range(len(matrix)-1):
+        for j in range(len(matrix[0])-1):
+            if matrix[i][j]== matrix[i+1][j] or matrix[i][j+1] == matrix[i][j]:
                 return 'Not Over!'
+
+    #Checking for two identical numbers placed next to each other that can be added in the last row
+    #If there are no numbers that can be added then 'Game Over' 
+    for k in range(len(matrix)-1):
+        if matrix[len(matrix)-1][k] == matrix[len(matrix)-1][k+1]:
+            return 'Not Over!'
         
-        #Checking for two identical numbers placed next to each other that can be added in the last column
-        #If there are no numbers that can be added then 'Game Over' 
-        for k in range(len(matrix)-1):
-            if matrix[k][len(matrix)-1] == matrix[k+1][len(matrix)-1]:
-                return 'NOt Over!'
-        return 'Lost:('
+    #Checking for two identical numbers placed next to each other that can be added in the last column
+    #If there are no numbers that can be added then 'Game Over' 
+    for k in range(len(matrix)-1):
+        if matrix[k][len(matrix)-1] == matrix[k+1][len(matrix)-1]:
+            return 'NOt Over!'
+    return 'Lost:('
     
 #Reversing a matrix(Reversing content of each row)
 def reverse(matrix):
